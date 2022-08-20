@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Cadastro</title>
+
+    <script>
+        // Criando uma função em JavaScript
+        function mensagem() {
+            alert("Executando uma função em JavaScript");
+        }
+
+        //Criando uma função em JS, para validar os campos do formulário
+        function validar() {
+            let CampoNome = cadastro.nome.value;
+            let senha = cadastro.senha.value;
+            let novaSenha = cadastro.novasenha.value;
+            let valid = true;
+            
+            if (CampoNome == "") {
+                alert("Por favor preencha o campo nome pois ele é obrigatório");
+                cadastro.nome.focus();
+                valid = false;
+                return false;
+            }
+            
+            if(!senha || senha.length <= 5){
+            	 alert("Senha deve ter mais de 5 caracteres");
+               cadastro.nome.focus();
+               valid = false;
+               return false;
+            }
+            
+            if(!novaSenha){
+            	 alert("Confirme sua senha");
+               cadastro.novasenha.focus();
+               valid = false;
+               return false;
+            }
+            
+            if(novaSenha && senha){
+            	if(novaSenha !== senha){
+              alert("A senha principal não está de acordo com a senha de confimação");
+              
+              cadastro.senha.value = '';
+              cadastro.novasenha.value = '';
+              
+              cadastro.novasenha.focus();
+              cadastro.senha.focus();
+              
+               valid = false;
+
+               return false;
+              }
+            }
+            
+           if(valid){
+              alert('Seja bem vindo', CampoNome)
+            } 
+        }
+    </script>
+
+</head>
+
+<body>
+    <form name="cadastro" method="get">
+        <label>Nome:</label>
+        <input type="text" name="nome"><br><br>
+        <label>Senha:</label>
+        <input type="password" name="senha"><br><br>
+        <label>Confirmação de senha:</label>
+        <input type="password" name="novasenha">
+        <input type="submit" onclick="return validar()" value="Enviar">
+    </form>
+
+</body>
+
+</html>

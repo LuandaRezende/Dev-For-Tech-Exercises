@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Cadastro</title>
+
+    <script>     
+    	 function CalculoTabuada(){
+         let number = value.value;
+
+         let html = '';
+                           
+         if(!number){
+         	alert('Ops... preencha com um número para calcular a tabuada!')
+           document.getElementById("result").innerHTML = '';
+         } else if (number >= 0){
+          console.log(number)
+           for(let i=0; i <= 10; i++){
+              html = html + '<p>'+number+'x'+i+'='+number*i+'</p>';
+           }
+
+           document.getElementById("result").innerHTML = html; 
+         }else{
+          alert('Ops... Numero digitado deve ser maior ou igual a 0!')
+          document.getElementById("result").innerHTML = '';
+         }
+                
+      }
+   
+    </script>
+</head>
+
+<body>
+   <form name="cadastro" method="post">
+         <label>Entre com o numéro da tabuada: </label> </br>
+         <input type="number" id="value" name="value" />
+         <input type="button" value="enviar" onClick="CalculoTabuada()"/>
+   </form>
+  
+  <div id="result">
+  </div>
+</body>
+
+</html>
