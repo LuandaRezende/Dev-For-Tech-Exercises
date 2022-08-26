@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de produtos</title>
+</head>
+
+<style>
+    #spoiler {
+        display: none;
+    }
+</style>
+
+<body>
+    <h2>Sistema de controle de produtos</h2>
+
+    <form action="javascript:void(0);" method="post" onsubmit="app.Add()">
+        <input type="text" id="add-product" placeholder="Digite o nome do produto" />
+        <input type="text" id="add-value" placeholder="Digite um valor" />
+        <input type="text" id="add-qty" placeholder="Digite uma quantidade" />
+        <input type="submit" value="adicionar" />
+    </form>
+
+    <div id="spoiler" role="aria-hidden">
+        <form action="javascript:void(0);" method="post" id="saveEdit">
+            <input type="text" id="edit-product" />
+            <input type="text" id="edit-value" />
+            <input type="text" id="edit-qty" />
+            <input type="submit" value="editar" />
+            <a onclick="CloseInput()" aria-label="close">X</a>
+        </form>
+
+    </div>
+
+    <p id="counter"></p>
+
+    <table border="1">
+        <tr>
+            <th>Produto</th>
+            <th>Valor</th>
+            <th>Unidade</th>
+            <th>Total</th>
+            <th>Opções</th>
+            <tbody id="itens">
+
+            </tbody>
+        </tr>
+    </table>
+
+    <button onclick="app.saveInTxt()">Gravar</button>
+
+
+
+    <script>
+        var app = new function () {
+            this.el = document.getElementById('itens');
+            this.itens = [];
+            this.Count = function (data) {
+                var el = document.getElementById('counter');
+                var name = 'registro';
+
+                if (data) {
+                    if (data > 0) {
+                        name = 'registros';
+                    }
+                    el.innerHTML = data + '-' + name;
+
+                } else {
+                    el.innerHTML = ' Nenhum ' + name;
+                }
+            }
+
+            this.FetchAll = function () {
+                var data = '';
+
+                if (this.itens.length > 0) {
+                    for (let i = 0; i < this.itens.length; i++) {
+                        data += '<tr>';
+                        data += '<td>' + this.itens[i].product + '</td>';
+                        data += '<td>' + this.itens[i].value + '</td>';
+                        data += '<td>' + this.itens[i].quantity + '</td>';
+                        data += '<td>' + this.itens[i].quantity * this.itens[i].value + '</td>';
+                        data += '<td><button onClick="app.Edit(' + i + ')">Editar</button></td>';
+                        data += '<td><button onClick="app.Delete(' + i + ')">Excluir</button></td>';
+                        data += '</tr>';
+                    }
+                }
+
+                this.Count(this.itens.length);
+
+                return this.el.innerHTML = data;
+            }
+
+            this.Add = function () {
+                elProductName = document.getElementById('add-product');
+                elValue = document.getElementById('add-value');
+                elQty = document.getElementById('add-qty');
+
+                let name = elProductName.value;
+                let value = document.getElementById('add-value').value;
+                let qty = document.getElementById('add-qty').value;
+
+                let newItens = {
+                    product: name,
+                    value: value,
+                    quantity: qty
+                }
+
+
+                if (name) {
+                    this.itens.push(newItens);
+
+                    document.getElementById('add-product').value = '';
+                    document.getElementById('add-value').value = '';
+                    document.getElementById('add-qty').value = '';
+
+                    this.FetchAll();
+                }
+
+            }
+
+            this.Edit = function (item) {
+                var elProductName = document.getElementById('edit-product');
+                var elValue = document.getElementById('edit-value');
+                var elQty = document.getElementById('edit-qty');
+
+                elProductName.value = this.itens[item].product;
+                elValue.value = this.itens[item].value;
+                elQty.value = this.itens[item].quantity;
+
+                document.getElementById('spoiler').style.display = 'block';
+                self = this;
+
+                document.getElementById('saveEdit').onsubmit = function () {
+                        var name = elProductName.value;
+                        var value = elValue.value;
+                        var qty = elQty.value;
+
+                        let newItens = {
+                            product: name,
+                            value: value,
+                            quantity: qty
+                        }
+
+                        self.itens.splice(item, 1, newItens);
+                        self.FetchAll();
+                        CloseInput();
+                   
+                }
+            };
+            
+            this.Delete = function(item){
+              this.itens.splice(item,1);
+              this.FetchAll();  
+            }
+
+            this.saveInTxt = function() {
+                let texto = document.getElementById("itens").innerHTML;
+
+                var aFileParts = [texto];
+
+                let blob = '';
+
+                let products = '';
+
+                if(this.itens.length > 0){
+                    for(let i = 0; i<this.itens.length; i++){
+                        let product = `${this.itens[i].product} - `;
+                        let value = `${this.itens[i].value} - `;
+                        let quantity = `${this.itens[i].quantity}`;
+
+                        products += i + ".produto" + ' : '+ product + " valor: " + value + " quantidade: " + quantity + '\n';
+                    }
+                }
+
+                blob = new Blob([products],
+                        {
+                            type:"'text/html'"
+
+                        });
+
+                saveAs(blob,'Estoque' + ".txt");
+            }
+            
+        }
+
+        function CloseInput () {
+            document.getElementById('spoiler').style.display = 'none';
+        }
+
+        app.FetchAll();
+    </script>
+
+<script type="text/javascript" src="FileSaver.js"></script>
+<script src="index.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página em JavaScript</title>
+
+    <!--Criando a nossa intervenção em JavaScript-->
+    <!--<script>
+        // Trabalhar com variáveis 
+
+        /*var mensagem ="Seja bem vindo";
+        var mensagem1="a nossa página com JavaScript";
+        alert(mensagem+" "+mensagem1);*/
+
+        /*var nome = prompt("Olá seja bem vindo, qual é o seu nome?");
+        alert("Prazer "+nome);*/
+
+        // Uma mensagem demonstrada na tela
+        //alert("Seja bem vindo a nossa página com JavaScript ");
+    
+    </script>-->
+        
+    <style>
+        /* Criando um estilo para tag nativa em html*/ 
+        p{
+            color:red;
+        }
+
+        body{
+            background-color: yellow;
+        }
+
+        /*Criando um estilo para classes */
+        .virgem{
+            color:green;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+<body>
+        <h1>Usando o JavaScript para crijar uma intervenção com o nosso HTML</h1>
+        <p class="java"></p>
+        <p>Isso é o meu primeiro parágrafo</p>
+        <p>Isso é outro parágrafo</p>
+        
+   
+        <p id="texto"></p><br>
+        <p id="texto1" ></p>
+     
+
+        <script> 
+            //Insere um texto na tag desejada
+            document.getElementsByTagName("p")[1].innerHTML="Olá boa noite";
+
+            //Insere um texto no id que está sendo relacionado 
+            document.getElementById("texto").innerHTML="Oi meus querido(a)s";
+            document.getElementById("texto1").innerHTML="Vamos codar em JavaScritp";
+            
+            //Inserir um conteúdo na classe criada para o java
+            document.getElementsByClassName("java");
+            collection[0].innerHTML="Oi";
+
+        </script>
+
+</body>
+</html>

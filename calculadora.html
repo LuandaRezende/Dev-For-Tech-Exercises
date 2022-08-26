@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+
+     <!--Chamada das bibliotecas externas do CSS BootStrap-->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+     <!--Chamada das bibliotecas externas do JS BootStrap-->
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+    <style>
+        #display{
+            width: 250px;
+            height: 40px;
+            background-color: purple;
+            margin: 4px;
+            font-size: 18px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        #zero{
+            width: 74px;
+            height: 30px;
+        }
+
+        .col-3 {
+            flex: 0 0 auto;
+            width: 0;
+        }
+    </style>
+
+    <script>
+        let history = [];
+
+        function addNumbers(num){
+            const number = document.getElementById('display').innerHTML;
+            document.getElementById('display').innerHTML = number + num;
+
+            history.push(num)
+            
+            calculate(document.getElementById('display').innerHTML);
+        }
+
+        function clearDisplay(){
+            document.getElementById('display').innerHTML = '';
+        }
+
+        function calculate(html){
+            const convertHtml = `${html.toString()}`;
+            let total = 0;
+
+            if(convertHtml === ''){
+                total = 0;
+            }else{
+                if(convertHtml.includes('%')){
+                    
+                }else{
+                    total = eval(convertHtml);
+                }
+            }
+
+            document.getElementById('result').innerHTML = total;
+
+            console.log(history)
+        }
+    </script>
+</head>
+<body>
+    <p id="display"></p>
+    <p id="result"></p> 
+        <!-- <button id="one" onclick="addNumbers(1)">1</button>
+        <button id="two" onclick="addNumbers(2)">2</button>
+        <button id="three" onclick="addNumbers(3)">3</button>
+        <button id="four" onclick="addNumbers(4)">4</button>
+        <button id="five" onclick="addNumbers(5)">5</button>
+        <button id="six" onclick="addNumbers(6)">6</button>
+        <button id="seven" onclick="addNumbers(7)">7</button>
+        <button id="eight" onclick="addNumbers(8)">8</button>
+        <button id="nine" onclick="addNumbers(9)">9</button>
+        <button id="zero" onclick="addNumbers(0)">0</button> -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <button id="one" onclick="addNumbers(1)">1</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="two" onclick="addNumbers(2)">2</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="three" onclick="addNumbers(3)">3</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="multiple" onclick="addNumbers('*')">x</button>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-3">
+                    <button id="four" onclick="addNumbers(4)">4</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="five" onclick="addNumbers(5)">5</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="six" onclick="addNumbers(6)">6</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="sub" onclick="addNumbers('-')">-</button>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-3">
+                    <button id="seven" onclick="addNumbers(7)">7</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="eight" onclick="addNumbers(8)">8</button>
+                </div>
+    
+                <div class="col-3">
+                    <button id="nine" onclick="addNumbers(9)">9</button>
+                </div>
+                
+                <div class="col-3">
+                    <button id="add" onclick="addNumbers('+')">+</button>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-12">
+                    <button id="zero" onclick="addNumbers(0)">0</button>
+                    <button id="equal" onclick="addNumbers('=')">=</button>
+                </div>
+    
+                
+            </div>
+    
+        </div>
+
+        <button id="add" onclick="addNumbers('+')">+</button>
+        <button id="comma" onclick="addNumbers(',')">,</button>
+        <button id="sub" onclick="addNumbers('-')">-</button>
+        <button id="multiple" onclick="addNumbers('*')">x</button>
+        <button id="equal" onclick="addNumbers('=')">=</button>
+        <button id="division" onclick="addNumbers('/')">/</button>
+        <button id="percentage" onclick="addNumbers('%')">%</button>
+        <button id="clear" onclick="clearDisplay()">C</button>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de registros</title>
+</head>
+
+<style>
+    #spoiler {
+        display: none;
+    }
+</style>
+
+<body>
+    <h2>Sistema de controle de registros</h2>
+
+    <form action="javascript:void(0);" method="post" onsubmit="app.Add()">
+        <input type="text" id="add-name" placeholder="Digite um nome" />
+        <input type="submit" value="adicionar" />
+    </form>
+
+    <div id="spoiler" role="aria-hidden">
+        <form action="javascript:void(0);" method="post" id="saveEdit">
+            <input type="text" id="edit-name" />
+            <input type="submit" value="editar" />
+            <a onclick="CloseInput()" aria-label="close">X</a>
+        </form>
+
+    </div>
+
+    <p id="counter"></p>
+
+    <table border="0">
+        <tr>
+            <th>Tabela de registros</th>
+            <tbody id="countries">
+
+            </tbody>
+        </tr>
+    </table>
+
+    <script>
+        var app = new function () {
+            this.el = document.getElementById('countries');
+            this.countries = ['Luanda', 'Erica', 'Ailson', 'Vitor', 'Luiz', 'Bruna'];
+            this.Count = function (data) {
+                var el = document.getElementById('counter');
+                var name = 'registro';
+
+                if (data) {
+                    if (data > 1) {
+                        name = 'registros';
+                    }
+                    el.innerHTML = data + '-' + name;
+
+                } else {
+                    el.innerHTML = 'Nenhum' + name;
+                }
+            }
+
+            this.FetchAll = function () {
+                var data = '';
+                if (this.countries.length > 0) {
+                    for (let i = 0; i < this.countries.length; i++) {
+                        data += '<tr>';
+                        data += '<td>' + this.countries[i] + '</td>';
+                        data += '<td><button onClick="app.Edit(' + i + ')">Editar</button></td>';
+                        data += '<td><button onClick="app.Delete(' + i + ')">Excluir</button></td>';
+                        data += '</tr>';
+                    }
+                }
+
+                this.Count(this.countries.length);
+
+                return this.el.innerHTML = data;
+            }
+
+            this.Add = function () {
+                el = document.getElementById('add-name');
+
+                var country = el.value;
+
+                if (country) {
+                    this.countries.push(country.trim());
+                    el.value = '';
+                    this.FetchAll();
+                }
+
+            }
+
+            this.Edit = function (item) {
+                var el = document.getElementById('edit-name');
+                el.value = this.countries[item];
+                document.getElementById('spoiler').style.display = 'block';
+                self = this;
+
+                document.getElementById('saveEdit').onsubmit = function () {
+                    var country = el.value;
+
+                    if (country) {
+                        self.countries.splice(item, 1, country.trim());
+                        self.FetchAll();
+                        CloseInput();
+                    }
+                }
+            };
+            
+            this.Delete = function(item){
+              this.countries.splice(item,1);
+              this.FetchAll();  
+            }
+        }
+
+        function CloseInput () {
+            document.getElementById('spoiler').style.display = 'none';
+        }
+
+        app.FetchAll();
+    </script>
+
+</body>
+
+</html>
